@@ -1,0 +1,55 @@
+import numpy as np
+from numpy import *
+import matplotlib.mlab as mlab
+import matplotlib.pyplot as plt
+import math
+import time
+import random
+import Gnuplot
+
+ranpam=genfromtxt('Plot.dat')
+ranpam_fixed=genfromtxt('ranpam_fixed.txt')
+#ranpam_small=genfromtxt('ranpam_small_dev.txt')
+#ranpam_medium=genfromtxt('ranpam_medium_dev.txt')
+#ranpam_large=genfromtxt('ranpam_large_dev.txt')
+toam=genfromtxt('toam.txt')
+toam_fixed=genfromtxt('toam_fixed.txt')
+#toam_small=genfromtxt('toam_small_dev.txt')
+#toam_medium=genfromtxt('toam_medium_dev.txt')
+#toam_large=genfromtxt('toam_large_dev.txt')
+#ranpam_medium_dev=genfromtxt('ranpam_medium_dev.txt')
+#ranpam_large_dev=genfromtxt('ranpam_large_dev.txt')
+#ranpam_small=genfromtxt('ranpam_large_dev.txt')
+#toam_small=genfromtxt('toam_large_dev.txt')
+gp=Gnuplot.Gnuplot(persist = 1)
+gp('set terminal x11 size 1000,1000 font "Helvetica,  31" ')
+#gp('set style fill transparent solid 0.2 noborder')
+#gp('set terminal postscript eps size 4.5,3.62 enhanced color \ font "Liberation Sans, 50" linewidth 2')
+gp('set tics font ",31" offset 0,-0.5,0')
+gp('set xlabel font",31"')
+gp('set ylabel font",31"')
+#gp('set key left')
+gp('set key at 0.5,2000')
+gp('set key box width 14')
+#gp('set title font "Liberation Sans,35"')
+gp('set pointsize 5')
+gp('set xlabel "NUMBER OF AGENTS" offset 0,-1.5,0')
+gp('set ylabel "EFFICIENCY LOSS" offset -2.5,0,0')
+gp('set xrange [0:60]')
+gp('set yrange [0:2000]')
+gp('set grid')
+gp('set xtics 5')
+gp('set ytics 200')
+plot1=Gnuplot.PlotItems.Data(ranpam, with_="lp", title="RanPAM")
+plot2=Gnuplot.PlotItems.Data(ranpam_fixed, with_="lp", title="RanPAM fixed")
+plot3=Gnuplot.PlotItems.Data(toam, with_="lp", title="TOAM")
+plot4=Gnuplot.PlotItems.Data(toam_fixed, with_="lp", title="TOAM fixed")
+#plot2=Gnuplot.PlotItems.Data(toam, with_="lp lt rgb 'blue'", title="TOAM")
+#plot6=Gnuplot.PlotItems.Data(toam_small, with_="lp", title="TOAM S-var")
+#plot7=Gnuplot.PlotItems.Data(toam_medium, with_="lp", title="TOAM M-var")
+#plot8=Gnuplot.PlotItems.Data(toam_large, with_="lp", title="TOAM L-var")
+gp('set key font ",31"')
+gp.plot(plot1,plot2,plot3,plot4)
+epsFilename= 'efficiency_fixed.eps'
+gp.hardcopy(epsFilename, terminal= 'postscript',color='rgb')
+gp.reset()
